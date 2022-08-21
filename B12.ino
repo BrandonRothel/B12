@@ -14,10 +14,13 @@ CRGB targetRGB[NUM_LEDS];
 
 int frame = 0;
 long unsigned int lastUpdate = 0;
-int antenna = 0;
 
 int eyesState = 0;
 long unsigned int eyesNextUpdate = 0;
+int antennaState = 0;
+long unsigned int antennaNextUpdate = 0;
+int engineState = 0;
+long unsigned int engineNextUpdate = 0;
 
 void setup()
 {
@@ -25,7 +28,6 @@ void setup()
 
   // tell FastLED about the LED strip configuration
   FastLED.addLeds<LED_TYPE, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
-  // FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
 
   // set master brightness control
   FastLED.setBrightness(BRIGHTNESS);
@@ -41,72 +43,22 @@ void setup()
 
 void loop()
 {
-  // if (millis() - lastUpdate > 100)
-  //{
-  //   lastUpdate = millis();
-  //   frame++;
-  //   if (frame > 100)
-  //   {
-  //     frame = 0;
-  //   }
-  //   // Serial.println(frame);
-  // }
-
-
-//  if (millis() - lastUpdate > 5000)
-// {
-//   lastUpdate = millis();
-//   int curRed = random(256);
-//   int curGreen = random(256);
-//   int curBlue = random(256);
-//   for (int ledNum = 0; ledNum < NUM_LEDS; ledNum++)
-//   {
-//     targetRGB[ledNum].r = curRed;
-//     targetRGB[ledNum].g = curGreen;
-//     targetRGB[ledNum].b = curBlue;
-//   }
-// }
-
-
-
   delay(10);
-  updateLeds(3);
+  updateLeds(10);
   if (millis() > eyesNextUpdate)
   {
     updateEyes();
   }
-  //
-  //  updateEngine();
-  //  updateAnntenna();
+  if (millis() > antennaNextUpdate)
+  {
+    updateAntenna();
+  }
+    if (millis() > engineNextUpdate)
+  {
+    updateEngine();
+  }
   FastLED.show();
 }
-
-// void updateEyes()
-//{
-//   // for (int i = 0; i < 14; i++ )
-//    {
-//      leds[i].setRGB(0, 0, 255); // Set Color HERE!!!
-//    }
-//  leds[6].setRGB(255, 0, 0);
-//  leds[1].setRGB(255, 0, 0);
-//
-//  leds[5].setRGB(0, 0, 0);
-//  leds[0].setRGB(0, 0, 0);
-//  leds[2].setRGB(0, 0, 0);
-//
-//  leds[4].setRGB(0, 255, 0);
-//  leds[3].setRGB(0, 255, 0);
-//
-//  leds[13].setRGB(255, 0, 0);
-//  leds[8].setRGB(255, 0, 0);
-//
-//  leds[12].setRGB(0, 0, 0);
-//  leds[7].setRGB(0, 0, 0);
-//  leds[9].setRGB(0, 0, 0);
-//
-//  leds[11].setRGB(0, 255, 0);
-//  leds[10].setRGB(0, 255, 0);
-//}
 
 void updateEyes()
 {
@@ -140,23 +92,23 @@ void updateEyes()
     targetRGB[6].setRGB(0, 0, 0);
     targetRGB[1].setRGB(0, 0, 0);
 
-    targetRGB[5].setRGB(0, 0, 0);
-    targetRGB[0].setRGB(0, 0, 0);
-    targetRGB[2].setRGB(0, 0, 0);
+    targetRGB[5].setRGB(64, 64, 0);
+    targetRGB[0].setRGB(64, 64, 0);
+    targetRGB[2].setRGB(64, 64, 0);
 
-    targetRGB[4].setRGB(0, 255, 0);
-    targetRGB[3].setRGB(0, 255, 0);
+    targetRGB[4].setRGB(0, 0, 0);
+    targetRGB[3].setRGB(0, 0, 0);
 
     targetRGB[13].setRGB(0, 0, 0);
     targetRGB[8].setRGB(0, 0, 0);
 
-    targetRGB[12].setRGB(0, 0, 0);
-    targetRGB[7].setRGB(0, 0, 0);
-    targetRGB[9].setRGB(0, 0, 0);
+    targetRGB[12].setRGB(64, 64, 0);
+    targetRGB[7].setRGB(64, 64, 0);
+    targetRGB[9].setRGB(64, 64, 0);
 
-    targetRGB[11].setRGB(0, 255, 0);
-    targetRGB[10].setRGB(0, 255, 0);
-    eyesNextUpdate += 500;
+    targetRGB[11].setRGB(0, 0, 0);
+    targetRGB[10].setRGB(0, 0, 0);
+    eyesNextUpdate += 250;
     eyesState = 2;
     break;
 
@@ -180,7 +132,7 @@ void updateEyes()
 
     targetRGB[11].setRGB(0, 0, 0);
     targetRGB[10].setRGB(0, 0, 0);
-    eyesNextUpdate += 1000;
+    eyesNextUpdate += 500;
     eyesState = 3;
     break;
 
@@ -188,23 +140,23 @@ void updateEyes()
     targetRGB[6].setRGB(0, 0, 0);
     targetRGB[1].setRGB(0, 0, 0);
 
-    targetRGB[5].setRGB(0, 0, 0);
-    targetRGB[0].setRGB(0, 0, 0);
-    targetRGB[2].setRGB(0, 0, 0);
+    targetRGB[5].setRGB(64, 64, 0);
+    targetRGB[0].setRGB(64, 64, 0);
+    targetRGB[2].setRGB(64, 64, 0);
 
-    targetRGB[4].setRGB(0, 255, 0);
-    targetRGB[3].setRGB(0, 255, 0);
+    targetRGB[4].setRGB(0, 0, 0);
+    targetRGB[3].setRGB(0, 0, 0);
 
     targetRGB[13].setRGB(0, 0, 0);
     targetRGB[8].setRGB(0, 0, 0);
 
-    targetRGB[12].setRGB(0, 0, 0);
-    targetRGB[7].setRGB(0, 0, 0);
-    targetRGB[9].setRGB(0, 0, 0);
+    targetRGB[12].setRGB(64, 64, 0);
+    targetRGB[7].setRGB(64, 64, 0);
+    targetRGB[9].setRGB(64, 64, 0);
 
-    targetRGB[11].setRGB(0, 255, 0);
-    targetRGB[10].setRGB(0, 255, 0);
-    eyesNextUpdate += 500;
+    targetRGB[11].setRGB(0, 0, 0);
+    targetRGB[10].setRGB(0, 0, 0);
+    eyesNextUpdate += 30;
     eyesState = 0;
     break;
 
@@ -269,26 +221,34 @@ void updateLeds(int speed)
 
 void updateEngine()
 {
-  for (int i = 14; i < 21; i++)
+  for (int i = 15; i < 21; i++)
   {
-    leds[i].setRGB(0, 255, 255); // Set Color HERE!!!
+    targetRGB[i].setRGB(0, 128, 128);
   }
+  engineState++;
+  if(engineState>20){
+    engineState = 15;
+  }
+  targetRGB[14].setRGB(0,0,0);
+  targetRGB[engineState].setRGB(0,0,0);
+  engineNextUpdate += 128;
 }
 
-void updateAnntenna()
+void updateAntenna()
 {
-  if (((frame % 25) < 18) && (antenna < 255))
+  switch (antennaState)
   {
-    antenna += 4;
-    Serial.println(antenna);
+  case 0:
+    targetRGB[21].setRGB(0, 200, 255);
+    targetRGB[22].setRGB(0, 200, 255);
+    antennaState = 1;
+    antennaNextUpdate += 3000;
+    break;
+  case 1:
+    targetRGB[21].setRGB(0, 0, 0);
+    targetRGB[22].setRGB(0, 0, 0);
+    antennaState = 0;
+    antennaNextUpdate += 500;
+    break;
   }
-  else
-  {
-    if (antenna > 0)
-    {
-      antenna -= 4;
-    }
-  }
-  leds[21].setRGB(0, antenna, antenna);
-  leds[22].setRGB(0, antenna, antenna);
 }
